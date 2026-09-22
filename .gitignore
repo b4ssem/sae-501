@@ -30,3 +30,12 @@ dist-ssr
 docker-compose.override.yml
 
 *.timestamp-*
+
+# Postman directories and files
+postman/
+Postman/
+.postman/
+*.postman_collection.json
+*.postman_environment.json
+*.postman_globals.json
+*.postman_dump.json
