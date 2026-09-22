@@ -285,8 +285,6 @@ docker-compose -f docker-compose.yml  --env-file ./env/.env.dev.local down --vol
 
 Pour garantir un historique propre, lisible et faciliter le travail en équipe sur le projet, merci de respecter les conventions suivantes pour le nommage des branches et des commits.
 
----
-
 ## Nommage des branches
 
 Les branches doivent être écrites en minuscules avec des mots séparés par des tirets (`kebab-case`). Elles doivent suivre le format :
