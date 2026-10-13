@@ -284,6 +284,11 @@ if (process.env.NODE_ENV === "development") {
     });
 }
 
+app.use((req, res) => {
+  res.status(404).render("pages/404.njk");
+});
+
+
 app.use(async (err, req, res, _next) => {
     res.status(500);
     const response = {
