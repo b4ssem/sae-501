@@ -43,4 +43,15 @@ router.get("/a-propos(.html)?", routeName("about"), async (_req, res) => {
     });
 });
 
+router.get("/lieux(.html)?", routeName("lieux"), async (_req, res) => {
+    let result = {};
+    try {
+        result = await fetch(`${res.locals.base_url}/api/saes?per_page=9`);
+    } catch (_error) {}
+
+    res.render("pages/front-end/lieux.njk", {
+        list_saes: result.data,
+    });
+});
+
 export default router;
