@@ -1,20 +1,19 @@
 import fs from "node:fs";
 
 export const buildPayload = (body = {}, file = null) => {
-    if (!file) {
-        return JSON.stringify(body);
-    }
-
     const form = new FormData();
 
     Object.entries(body).forEach(([key, value]) => {
         form.append(key, value);
     });
 
-    form.append(file.fieldname, fs.createReadStream(file.path), {
-        filename: file.originalname,
-        contentType: file.mimetype,
-    });
+    if (file) {
+        form.append(
+            file.fieldname,
+            new Blob([fs.readFileSync(file.path)], { type: file.mimetype }),
+            file.originalname
+        );
+    }
 
     return form;
 };
