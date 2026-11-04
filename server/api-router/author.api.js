@@ -434,6 +434,7 @@ router.put(
 
         try {
             const payloadValidated = AuthorZodSchema.parse({
+                image: oldRessource?.image,
                 ...req.body,
                 ...imagePayload,
             });
