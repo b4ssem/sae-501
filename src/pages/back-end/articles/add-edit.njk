@@ -1,0 +1,115 @@
+{% extends "layouts/back-end/base.njk" %}
+
+{% set active_menu_item = "articles" %}
+{% set abstract_chars_limit = 300 %}
+{% set content_chars_limit = 10000 %}
+
+{% import "components/back-end/input-file.njk" as input_file with context %}
+{% import "components/icons/index.njk" as icons %}
+
+{% block title %}
+    {% if is_edit == true %}
+        Editer "{{ article.title }}"
+    {% else %}
+        Créer un article
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+    <div class="bg-white rounded-2xl shadow-md pb-6">
+        <header class="mb-1 p-6">
+            {% include "components/back-end/breadcrumb.njk" %}
+            <h2 class="text-4xl">
+                {% if is_edit == true %}
+                    Editer "{{ article.title }}"
+                {% else %}
+                    Créer un article
+                {% endif %}
+            </h2>
+            <p class="text-sm">Les champs avec
+                <span class="font-bold text-slate-700 after:content-['*'] after:ml-0.5 after:text-red-500"></span>
+                sont requis
+            </p>
+        </header>
+        <div class="px-6">
+            {% for item in list_errors %}
+                <p class="rounded-lg p-3 bg-red-100 text-red-800 border-solid border-x border-y border-red-700 mb-3">{{ item }}</p>
+            {% endfor %}
+            {% if messages.success %}
+                <p class="rounded-lg p-3 bg-green-100 text-green-800 border-solid border-x border-y border-green-700 mb-3" data-flash-message>{{ messages.success }}</p>
+            {% endif %}
+            <form action="" data-form method="post" enctype="multipart/form-data">
+                <label class="block mb-4">
+                    <span class="font-bold text-slate-700 after:content-['*'] after:ml-0.5 after:text-red-500">Titre</span>
+                    <input class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-xs focus:outline-hidden focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" type="text" name="title" value="{{ article.title }}"/>
+                </label>
+
+                <label class="block mb-4">
+                    <span class="font-bold text-slate-700">Chapô</span>
+                    <textarea name="abstract" rows="2" maxlength="{{ abstract_chars_limit }}" data-char-counter="article-abstract" class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-xs focus:outline-hidden focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" aria-describedby="abstract_counter_description">{{ article.abstract }}</textarea>
+                    <p class="text-sm" id="abstract_counter_description" data-char-counter-output="article-abstract">{{ abstract_chars_limit }} caractères restants</p>
+                </label>
+
+                <div class="block mb-4">
+                    <label for="image">
+                        <span class="font-bold text-slate-700 after:content-['*'] after:ml-0.5 after:text-red-500">Image</span>
+                    </label>
+                    {{ input_file.field(article.image, undefined, ".jpg, .jpeg, .png, .avif") }}
+                </div>
+
+                <label class="block mb-4">
+                    <span class="font-bold text-slate-700 after:content-['*'] after:ml-0.5 after:text-red-500">Contenu</span>
+                    <textarea name="content" rows="10" maxlength="{{ content_chars_limit }}" data-char-counter="article-content" class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-xs focus:outline-hidden focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" aria-describedby="content_counter_description">{{ article.content }}</textarea>
+                    <p class="text-sm" id="content_counter_description" data-char-counter-output="article-content">{{ content_chars_limit }} caractères restants</p>
+                </label>
+
+                <label class="block mb-4">
+                    <span class="font-bold text-slate-700">Vidéo YouTube</span>
+                    <input
+                        class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-xs focus:outline-hidden focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                        type="text"
+                        name="yt_video_id"
+                        data-youtube-input="article-video"
+                        placeholder="URL, id ou lien court YouTube (facultatif)"
+                        value="{{ article.yt_video_id }}"
+                    />
+                    <p class="text-sm text-red-700 mt-1 hidden" data-youtube-error="article-video">Lien ou identifiant YouTube invalide</p>
+                    <div class="mt-2 aspect-video max-w-md hidden" data-youtube-preview="article-video">
+                        <iframe
+                            class="w-full h-full"
+                            loading="lazy"
+                            title="Aperçu de la vidéo YouTube"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                </label>
+
+                <label class="block mb-4">
+                    <span class="font-bold text-slate-700">Auteur</span>
+                    <input
+                        class="block bg-white w-full border border-slate-300 rounded-md py-2 pr-3 shadow-xs focus:outline-hidden focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                        type="text"
+                        list="list-authors"
+                        data-author-search="article-author"
+                        placeholder="Nom de l'auteur (laisser vide pour « La rédaction »)"
+                        value="{{ (article.author.firstname ~ ' ' ~ article.author.lastname) if article.author else '' }}"
+                    />
+                    <datalist id="list-authors">
+                        {% for author in list_authors.data %}
+                            <option data-author-id="{{ author._id }}" value="{{ author.firstname }} {{ author.lastname }}"></option>
+                        {% endfor %}
+                    </datalist>
+                    <input type="hidden" name="author" data-author-hidden="article-author" value="{{ article.author._id }}">
+                </label>
+
+                <div class="flex gap-x-3 gap-y-5 flex-col justify-end sm:flex-row">
+                    <button class="px-4 py-2 font-semibold text-sm bg-blue-700 hocus:bg-blue-950 text-white rounded-2xl shadow-xs inline-flex gap-1 items-center justify-center" type="submit">
+                        {{ icons.save() }}
+                        Sauvegarder
+                    </button>
+                    <button class="px-4 py-2 font-semibold text-sm bg-neutral-100 hocus:bg-neutral-200 text-black rounded-2xl shadow-xs" type="reset">Réinitialiser</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
