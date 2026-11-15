@@ -54,6 +54,7 @@
     "#server/utils/*.js": "./server/utils/*.js",
     "#server/*.js": "./server/*.js",
     "#database/*.js": "./database/*.js",
+    "#schemas/*.js": "./utils/schemas/*.js",
     "#utils": "./src/scripts/utils/index.js",
     "#utils-shared": "./utils/index.js",
     "#generate-list-routes.js": "./generate-list-routes.js"

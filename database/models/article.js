@@ -1,30 +1,12 @@
 import mongoose, { Schema } from "mongoose";
 import slugify from "slugify";
-import * as z from "zod";
 
 import { listStopWords } from "#database/list-stop-words.js";
-import { errorRequiredMessage } from "#database/error-messages.js";
+import { ArticleZodSchema } from "#schemas/article.js";
 import CommentArticle from "./comment-article.js";
 import Author from "./author.js";
 
-export const ArticleZodSchema = z.object({
-    title: z
-        .string({
-            error: errorRequiredMessage("un titre"),
-        })
-        .trim()
-        .min(1, { error: errorRequiredMessage("un titre") }),
-    abstract: z.string().optional(),
-    content: z
-        .string({
-            error: errorRequiredMessage("un corps de texte"),
-        })
-        .trim()
-        .min(1, { error: errorRequiredMessage("un corps de texte") }),
-    image: z.string({ error: "Image obligatoire" }).trim().min(1, { error: "Image obligatoire" }),
-    yt_video_id: z.string().optional(),
-    is_active: z.coerce.boolean().default(false),
-});
+export { ArticleZodSchema };
 
 const articleSchema = new Schema(
     {

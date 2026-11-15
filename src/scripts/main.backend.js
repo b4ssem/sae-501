@@ -18,6 +18,7 @@ import "./back-end/flash-message.js";
 import "./back-end/char-counter.js";
 import "./back-end/youtube-preview.js";
 import "./back-end/author-datalist.js";
+import "./back-end/form-validation.js";
 import "/src/scripts/store-scroll-position.utils";
 
 if (process.env.NODE_ENV === "development") {
