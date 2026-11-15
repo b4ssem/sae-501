@@ -11,10 +11,9 @@ export const buildPayload = (body = {}, file = null) => {
         form.append(key, value);
     });
 
-    form.append(file.fieldname, fs.createReadStream(file.path), {
-        filename: file.originalname,
-        contentType: file.mimetype,
-    });
+    const fileBuffer = fs.readFileSync(file.path);
+    const blob = new Blob([fileBuffer], { type: file.mimetype });
+    form.append(file.fieldname, blob, file.originalname);
 
     return form;
 };
