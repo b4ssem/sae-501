@@ -22,16 +22,7 @@
                     Ajouter un nouvel article
                 </a>
                 <a href="{{ "?sorting=" ~ sort_param }}" class="w-full flex gap-1 justify-center @3xl/main:hidden sm:w-fit text-md bg-neutral-100 hocus:bg-neutral-200 text-black rounded-2xl items-center text-sm py-2 px-4 h-fit text-center">
-                    {% if using_asc %}
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h5.25m5.25-.75L17.25 9m0 0L21 12.75M17.25 9v12" />
-                        </svg>
-                    {% else %}
-                        <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0-3.75-3.75M17.25 21 21 17.25" />
-                        </svg>
-                    {% endif %}
-                    Trier du plus récent au plus ancien
+                    {{ sort_text }}
                 </a>
             </div>
         </header>
