@@ -2,6 +2,7 @@ import express from "express";
 
 import routeName from "#server/utils/name-route.middleware.js";
 import parseManifest from "#server/utils/parse-manifest.js";
+import { getOpenHouse } from "#server/utils/open-house.js";
 
 const router = express.Router();
 
@@ -26,8 +27,14 @@ router.get("/", routeName("homepage"), async (req, res) => {
         result = await fetch(`${res.locals.base_url}/api/articles?${queryParams}&is_active=true`);
     } catch (_error) {}
 
+    let openHouse = {};
+    try {
+        openHouse = await getOpenHouse();
+    } catch (_error) {}
+
     res.render("pages/front-end/index.njk", {
         list_articles: result.data,
+        open_house: openHouse,
     });
 });
 

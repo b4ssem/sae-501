@@ -36,9 +36,9 @@
             <section class="textes">
                 <p class="text-2xl">Journée portes ouvertes</p>
                 <p class="text-4xl mb-3">
-                    12/02/2023,
+                    {{ open_house.date | date("dd/LL/yyyy") }},
                     <br>
-                    de 10h à 17h
+                    de {{ open_house.start_time }} à {{ open_house.end_time }}
                 </p>
                 <p class="en-savoir-plus">EN SAVOIR PLUS</p>
             </section>
