@@ -5,7 +5,6 @@
 {% set content_chars_limit = 10000 %}
 
 {% import "components/back-end/input-file.njk" as input_file with context %}
-{% import "components/icons/index.njk" as icons %}
 
 {% block title %}
     {% if is_edit == true %}
@@ -104,7 +103,6 @@
 
                 <div class="flex gap-x-3 gap-y-5 flex-col justify-end sm:flex-row">
                     <button class="px-4 py-2 font-semibold text-sm bg-blue-700 hocus:bg-blue-950 text-white rounded-2xl shadow-xs inline-flex gap-1 items-center justify-center" type="submit">
-                        {{ icons.save() }}
                         Sauvegarder
                     </button>
                     <button class="px-4 py-2 font-semibold text-sm bg-neutral-100 hocus:bg-neutral-200 text-black rounded-2xl shadow-xs" type="reset">Réinitialiser</button>
