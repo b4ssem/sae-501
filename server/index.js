@@ -22,6 +22,7 @@ import apiRouter from "./api-router/index.js";
 
 import breadcrumb from "./utils/breadcrumb.middleware.js";
 import responseTimeMiddleware from "./utils/responsetime.middleware.js";
+import icon from "./utils/icon.js";
 
 import { generateUrl, getNameForRoute } from "#generate-list-routes.js";
 // import packageJSON from "../package.json" with { type: "json" };
@@ -348,6 +349,8 @@ const nunjucksEnv = nunjucks.configure(app.get("views"), {
 nunjucksEnv.addFilter("date", (value, format) => {
     return DateTime.fromISO(value).toFormat(format);
 });
+
+nunjucksEnv.addGlobal("icon", icon);
 
 const getContextData = (root) => {
     let res = {};
