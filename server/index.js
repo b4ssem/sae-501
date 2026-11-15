@@ -284,14 +284,24 @@ if (process.env.NODE_ENV === "development") {
     });
 }
 
+app.use((req, res) => {
+    res.status(404);
+    res.render("pages/error.njk", {
+        statusCode: 404,
+        error: { message: `La page "${req.path}" n'existe pas.` },
+    });
+});
+
 app.use(async (err, req, res, _next) => {
     res.status(500);
     const response = {
-        ...(process.env.NODE_ENV === "development" ? {
-            error: err,
-            statusCode: res.statusCode,
-            sourceCode: null,
-        } : {}),
+        ...(process.env.NODE_ENV === "development"
+            ? {
+                    error: err,
+                    statusCode: res.statusCode,
+                    sourceCode: null,
+                }
+            : {}),
     };
 
     if (process.env.NODE_ENV === "development") {
