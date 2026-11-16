@@ -1,0 +1,37 @@
+{% macro table(list_messages) %}
+    {% set identity_labels = {
+        "none": "Non précisé",
+        "student": "Étudiant·e",
+        "parent": "Parent",
+        "other": "Autre"
+    } %}
+
+    <table class="w-full bg-white rounded-lg overflow-hidden border-collapse">
+        <thead>
+            <tr class="text-slate-800">
+                <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b">Nom</th>
+                <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b">E-mail</th>
+                <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b">Profil</th>
+                <th class="font-bold px-6 py-3 text-left border-solid border-slate-200 border-b">Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in list_messages.data %}
+                <tr class="hover:bg-neutral-50 even:bg-blue-50">
+                    <td class="bg-transparent border-solid border-slate-200 border-b py-4 px-6" data-label="Nom">{{ item.firstname }} {{ item.lastname }}</td>
+                    <td class="bg-transparent border-solid border-slate-200 border-b py-4 px-6" data-label="E-mail">
+                        <a href="mailto:{{ item.email }}" class="text-blue-700 hover:text-blue-900">{{ item.email }}</a>
+                    </td>
+                    <td class="bg-transparent border-solid border-slate-200 border-b py-4 px-6" data-label="Profil">{{ identity_labels[item.identity] or "Non précisé" }}</td>
+                    <td class="py-4 px-6 bg-transparent border-solid border-slate-200 border-b shadow-transparent @2xl/main:max-w-[300px]" data-label="Message">
+                        <p class="line-clamp-2 md:line-clamp-1" title="{{ item.message }}">{{ item.message }}</p>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center bg-transparent border-solid border-slate-200 border-b py-4 px-6">Pas de message pour le moment</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}

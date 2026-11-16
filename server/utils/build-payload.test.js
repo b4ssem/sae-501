@@ -5,16 +5,19 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { buildPayload } from "./build-payload.js";
 
 describe("buildPayload", () => {
-    it("should return a JSON string when there is no file", () => {
+    it("should return a FormData instance even when there is no file", () => {
         const result = buildPayload({ title: "Hello" }, null);
 
-        expect(result).toBe(JSON.stringify({ title: "Hello" }));
+        expect(result).toBeInstanceOf(FormData);
+        expect(result.get("title")).toBe("Hello");
+        expect(result.get("image")).toBeNull();
     });
 
     it("should default to an empty body when none is given", () => {
         const result = buildPayload();
 
-        expect(result).toBe("{}");
+        expect(result).toBeInstanceOf(FormData);
+        expect([...result.keys()]).toEqual([]);
     });
 
     describe("with a file", () => {

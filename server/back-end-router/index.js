@@ -8,6 +8,7 @@ import saeRouter from "./sae.js";
 import articleRouter from "./article.js";
 import authorsRouter from "./author.js";
 import diversRouter from "./divers.js";
+import messageRouter from "./message.js";
 
 const router = express.Router();
 
@@ -29,6 +30,7 @@ router.use(saeRouter);
 router.use(articleRouter);
 router.use(authorsRouter);
 router.use(diversRouter);
+router.use(messageRouter);
 
 router.get("/", routeName("admin"), async (req, res) => {
     const NB_ITEMS_PER_PAGE = 5;
@@ -43,14 +45,24 @@ router.get("/", routeName("admin"), async (req, res) => {
     const articlesResponse = await fetch(`${res.locals.base_url}/api/articles?${queryParamsArticles.toString()}`);
     const articlesData = await articlesResponse.json();
     
+    let listMessages = [];
+    const queryParamsMessages = new URLSearchParams({ per_page: NB_ITEMS_PER_PAGE });
+    const messagesResponse = await fetch(`${res.locals.base_url}/api/messages?${queryParamsMessages.toString()}`);
+    const messagesData = await messagesResponse.json();
+
     if (saesResponse.ok && articlesResponse.ok) {
         listSaes = saesData;
         listArticles = articlesData;
     }
 
+    if (messagesResponse.ok) {
+        listMessages = messagesData;
+    }
+
     res.render("pages/back-end/index.njk", {
         list_saes: listSaes,
         list_articles: listArticles,
+        list_messages: listMessages,
     });
 });
 

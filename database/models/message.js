@@ -6,24 +6,28 @@ import { errorRequiredMessage } from "#database/error-messages.js";
 export const MessageZodSchema = z.object({
     firstname: z
         .string({
-            error: errorRequiredMessage("un titre"),
+            error: errorRequiredMessage("un prénom"),
         })
         .trim()
-        .min(1, { error: errorRequiredMessage("un titre") }),
+        .min(1, { error: errorRequiredMessage("un prénom") }),
     lastname: z
         .string({
-            error: errorRequiredMessage("un titre"),
+            error: errorRequiredMessage("un nom"),
         })
         .trim()
-        .min(1, { error: errorRequiredMessage("un titre") }),
-    email: z.email(),
+        .min(1, { error: errorRequiredMessage("un nom") }),
+    email: z.email({ error: "Veuillez mettre un email valide" }).trim(),
     message: z
         .string({
-            error: errorRequiredMessage("un titre"),
+            error: errorRequiredMessage("un message"),
         })
         .trim()
-        .min(1, { error: errorRequiredMessage("un titre") }),
-    identity: z.enum(["none", "student", "parent", "other"]).optional(),
+        .min(1, { error: errorRequiredMessage("un message") }),
+    identity: z
+        .enum(["none", "student", "parent", "other"], {
+            error: "Veuillez choisir un profil valide",
+        })
+        .default("none"),
 });
 
 const messageSchema = new Schema({
@@ -50,7 +54,7 @@ const messageSchema = new Schema({
     identity: {
         type: String,
         enum: ["none", "student", "parent", "other"],
-        required: true
+        default: "none",
     },
 });
 
