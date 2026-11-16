@@ -38,6 +38,31 @@ describe("AuthorZodSchema", () => {
         expect(result.success).toBe(false);
     });
 
+    it("should reject a typo'd provider domain (gmail.co instead of gmail.com)", () => {
+        const result = AuthorZodSchema.safeParse({
+            firstname: "Ada",
+            lastname: "Lovelace",
+            email: "ada@gmail.co",
+            image: "photo.png",
+            bio: "",
+        });
+
+        expect(result.success).toBe(false);
+        expect(result.error.issues[0].message).toContain("gmail.com");
+    });
+
+    it("should accept a legitimate short-TLD domain unrelated to any known provider", () => {
+        const result = AuthorZodSchema.safeParse({
+            firstname: "Ada",
+            lastname: "Lovelace",
+            email: "ada@my-startup.co",
+            image: "photo.png",
+            bio: "",
+        });
+
+        expect(result.success).toBe(true);
+    });
+
     describe("picking only firstname/lastname/email (client-side usage)", () => {
         const ClientSchema = AuthorZodSchema.pick({ firstname: true, lastname: true, email: true });
 
@@ -49,6 +74,16 @@ describe("AuthorZodSchema", () => {
             });
 
             expect(result.success).toBe(true);
+        });
+
+        it("should still reject a typo'd provider domain", () => {
+            const result = ClientSchema.safeParse({
+                firstname: "Ada",
+                lastname: "Lovelace",
+                email: "ada@gmail.co",
+            });
+
+            expect(result.success).toBe(false);
         });
 
         it("should still reject an invalid email", () => {
