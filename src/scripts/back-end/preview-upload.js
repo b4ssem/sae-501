@@ -58,10 +58,24 @@ const previewImageObserver = new MutationObserver((mutationList) => {
                 `[data-filename="${mutation.target.dataset.previewUpload}"]`
             );
 
+            const uploadName = mutation.target.dataset.previewUpload;
+            const currentImage = document.querySelector(
+                `[data-current-image="${uploadName}"]`
+            );
+            const previewHead = document.querySelector(
+                `[data-input-file-preview="${uploadName}"]`
+            );
+            const previewRow = document.querySelector(
+                `[data-input-file-preview-row="${uploadName}"]`
+            );
+
             const newValue = mutation.target.getAttribute("src");
+            const hasAnyImage = newValue !== "" || Boolean(currentImage?.getAttribute("src"));
             deleteBtn.classList.toggle("hidden", newValue === "");
             btnPreview.classList.toggle("hidden", newValue === "");
             fileName.classList.toggle("hidden", newValue === "");
+            previewHead?.classList.toggle("hidden", !hasAnyImage);
+            previewRow?.classList.toggle("hidden", !hasAnyImage);
         }
     });
 });
