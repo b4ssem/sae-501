@@ -1,0 +1,7 @@
+{# Icônes réutilisables de l'administration. #}
+{# Un nom métier par macro, jamais le nom/chemin heroicons exposé aux pages appelantes. #}
+{# Usage : {% import "components/icons/index.njk" as icons %} puis {{ icons.save() }} #}
+
+{% macro save(class = "w-6 h-6") %}
+    {{ icon("pencil", { className: class }) | safe }}
+{% endmacro %}

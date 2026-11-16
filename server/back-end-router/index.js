@@ -7,6 +7,7 @@ import parseManifest from "#server/utils/parse-manifest.js";
 import saeRouter from "./sae.js";
 import articleRouter from "./article.js";
 import authorsRouter from "./author.js";
+import diversRouter from "./divers.js";
 import messageRouter from "./message.js";
 
 const router = express.Router();
@@ -28,6 +29,7 @@ router.use(async (_req, res, next) => {
 router.use(saeRouter);
 router.use(articleRouter);
 router.use(authorsRouter);
+router.use(diversRouter);
 router.use(messageRouter);
 
 router.get("/", routeName("admin"), async (req, res) => {
