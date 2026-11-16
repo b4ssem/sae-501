@@ -1,11 +1,13 @@
 import { ArticleZodSchema } from "#schemas/article.js";
 import { SaeZodSchema } from "#schemas/sae.js";
+import { AuthorZodSchema } from "#schemas/author.js";
 
 // Only the text fields make sense to check before the page even reaches the server
 // (image is conditionally required depending on create/edit, handled server-side).
 const schemas = {
     article: ArticleZodSchema.pick({ title: true, content: true }),
     sae: SaeZodSchema.pick({ title: true, content: true }),
+    author: AuthorZodSchema.pick({ firstname: true, lastname: true, email: true }),
 };
 
 const renderErrors = (container, messages) => {
