@@ -1,10 +1,10 @@
- import express from "express";
+import express from "express";
 import { ZodError } from "zod";
 
 import Message, { MessageZodSchema } from "#models/message.js";
 import routeName from "#server/utils/name-route.middleware.js";
 
- import { mapZodErrors } from "#database/error-messages.js";
+import { mapZodErrors } from "#database/error-messages.js";
 
 const router = express.Router();
 const base = "messages";
