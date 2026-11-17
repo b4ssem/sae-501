@@ -1,0 +1,47 @@
+{% extends "layouts/front-end/base.njk" %}
+{% set page = "article_detail" %}
+
+{% block title %}{{ article.title }}
+{% endblock %}
+
+{% block main %}
+    <article class="my-8">
+        <h1 class="text-3xl font-bold mb-4">{{ article.title }}</h1>
+
+        <div class="rounded-lg overflow-hidden mb-6">
+            <img src="{{ 'images/image-placeholder-article.png' if article.image|length == 0 else '/uploads/' ~ article.image }}" alt="">
+        </div>
+
+        {% set content = article.content | striptags(true) | escape | nl2br %}
+        <div class="max-w-prose">{{ content }}</div>
+    </article>
+
+    <section class="my-12" data-comments-section data-article-id="{{ article._id }}">
+        <h2 class="text-2xl font-bold mb-4">Commentaires (<span data-comments-count>{{ list_comments | length }}</span>)</h2>
+
+        <form data-comment-form class="mb-6">
+            <label for="comment-content" class="block mb-1 font-semibold">Ajouter un commentaire</label>
+            <textarea id="comment-content" name="content" rows="3" class="w-full rounded-lg border border-solid border-gray-300 p-3" required></textarea>
+            <div data-comment-errors class="hidden rounded-lg p-3 my-2 bg-red-100 text-red-800 border-solid border-x border-y border-red-700"></div>
+            <button type="submit" class="mt-2 rounded-2xl bg-blue-700 hocus:bg-blue-950 text-white px-4 py-2">Publier</button>
+        </form>
+
+        <ul data-comments-list class="flex flex-col gap-y-3">
+            {% for comment in list_comments %}
+                <li class="rounded-lg border border-solid border-gray-200 p-3">
+                    <p>{{ comment.content | striptags(true) | escape | nl2br }}</p>
+                    <p class="text-sm text-slate-500 mt-1">{{ comment.created_at | date("dd/LL/yyyy à HH:mm") }}</p>
+                </li>
+            {% else %}
+                <li data-no-comments>Aucun commentaire pour le moment</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <template data-tpl-id="comment-item">
+        <li class="rounded-lg border border-solid border-gray-200 p-3">
+            <p data-comment-content></p>
+            <p class="text-sm text-slate-500 mt-1" data-comment-date></p>
+        </li>
+    </template>
+{% endblock %}
