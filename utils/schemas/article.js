@@ -19,4 +19,5 @@ export const ArticleZodSchema = z.object({
     image: z.string({ error: "Image obligatoire" }).trim().min(1, { error: "Image obligatoire" }),
     yt_video_id: z.string().optional(),
     is_active: z.coerce.boolean().default(false),
+    author: z.string().optional(),
 });

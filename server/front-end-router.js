@@ -61,6 +61,20 @@ router.get("/lieux(.html)?", routeName("lieux"), async (_req, res) => {
     });
 });
 
+router.get("/auteurs/:id([a-f0-9]{24})", routeName("author_detail"), async (req, res) => {
+    const response = await fetch(`${res.locals.base_url}/api/authors/${req.params.id}?per_page=20`);
+
+    if (!response.ok) {
+        return res.status(404).render("pages/404.njk");
+    }
+
+    const author = await response.json();
+
+    res.render("pages/front-end/auteur.njk", {
+        author,
+    });
+});
+
 router.get("/sur-les-medias(.html)?", routeName("sur-les-medias"), async (_req, res) => {
     let result = {};
     try {
