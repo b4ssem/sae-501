@@ -174,15 +174,15 @@ docker-compose -f docker-compose.yml  --env-file ./env/.env.dev.local down --vol
 
 ### Yves
 
-- [ ] Gérer la date des journées portes ouvertes (affichée dans la page d'accueil du site BUT) depuis le backoffice qui lira/modifiera un fichier json
+- [x] Gérer la date des journées portes ouvertes (affichée dans la page d'accueil du site BUT) depuis le backoffice qui lira/modifiera un fichier json
   - Le fichier n'existe pas, vous devez le créer dans le dossier src/data pour que son contenu puisse être lu dans les templates
   - La documentation de Nodejs propose des exemples pour lire/éditer un fichier json (préférez la version avec async / await) :
     - [Lire un fichier](https://nodejs.org/en/learn/manipulating-files/reading-files-with-nodejs)
     - [Ecrire un fichier](https://nodejs.org/en/learn/manipulating-files/writing-files-with-nodejs)
       - Note : Vous devez impérativement transformer le contenu à écrire en chaîne de caractères avant de l'écrire dans le fichier
-- [ ] Afficher en "temps réel" le nombre de caractères dans la balise &lt;textarea>
+- [x] Afficher en "temps réel" le nombre de caractères dans la balise &lt;textarea>
   - Lors de l'édition d'une SAE, il y a une limite de caractères, indiquez à l'utilisateur le nombre de caractères restants
-- [ ] Permettre de créer, éditer un article
+- [x] Permettre de créer, éditer un article
   - Toutes les routes d'API sont déjà prêtes pour manipuler la base de données. Il faut créer les pages associées
   - **Le champ permettant l'upload d'images doit impérativement s'appeller "image" (attribut "name"), sinon ça ne fonctionnera pas**
   - La suppression et le listage sont déjà gérés
@@ -192,16 +192,16 @@ docker-compose -f docker-compose.yml  --env-file ./env/.env.dev.local down --vol
       - [En savoir plus sur le lazy loading des &lt;iframe>](https://web.dev/articles/iframe-lazy-loading)
   - Inspirez-vous de ce qui a déjà été fait pour la partie SAE, partie qui est complète
   - La gestion de l'auteur doit être réalisée avec la balise &lt;datalist> ou un plugin comme TomSelect ou choicesjs (pas installé et à préférer)
-- [ ] Ajouter une validation côté client des formulaires (SAE, Auteur et Article)
+- [x] Ajouter une validation côté client des formulaires (SAE, Auteur et Article)
   - Vous pouvez utiliser un outil comme [zod.js](https://zod.dev/) (déjà installé, voir `code/database/models/author.js`)
   - Dépendamment de l'outil, **vous devrez écouter un évènement pour la validation du formulaire**
-- [ ] Proposer un système de thème au niveau des couleurs dans l'administration. Présentement tout tourne autour du bleu, proposez un moyen de changer la couleur pour chaque utilisateur
+- [x] Proposer un système de thème au niveau des couleurs dans l'administration. Présentement tout tourne autour du bleu, proposez un moyen de changer la couleur pour chaque utilisateur
   - **Vous ne devez pas utiliser une base de données pour stocker la valeur**
   - Pour rendre les choses les plus simples possibles, vous ne proposerez que les [couleurs listées par tailwind](https://tailwindcss.com/docs/customizing-colors)
   - Changer la valeur de la balise [meta "theme-color"](https://developer.mozilla.org/fr/docs/Web/HTML/Element/meta/name/theme-color) en fonction du background-color de l'écran
-- [ ] Permettre, de façon asynchrone, d'ajouter un commentaire à un article et l'afficher
+- [x] Permettre, de façon asynchrone, d'ajouter un commentaire à un article et l'afficher
   - Pour gérer les messages plus facilement, aidez-vous de la balise &lt;template>
-- [ ] Ajouter une page affichant en détails un auteur
+- [x] Ajouter une page affichant en détails un auteur
   - Cette page n'existe pas, à vous de faire le design
   - Il y a déjà une url pour récupérer ces informations (voir swagger ou postman)
   - La couleur de la bulle change en fonction de l'auteur (optionnel)
