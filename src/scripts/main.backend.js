@@ -3,6 +3,7 @@ import "/src/styles/scroll-shadow.css";
 import "/src/styles/tailwind.css";
 import "/src/styles/back-end/index.css";
 
+import "./back-end/theme-color.js";
 import "./back-end/delete-entry-modal.js";
 import "./back-end/preview-upload.js";
 import "./back-end/paste-clipboard-image.js";
