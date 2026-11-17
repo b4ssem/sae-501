@@ -75,6 +75,27 @@ router.get("/auteurs/:id([a-f0-9]{24})", routeName("author_detail"), async (req,
     });
 });
 
+router.get("/articles/:id([a-f0-9]{24})", routeName("article_detail"), async (req, res) => {
+    const response = await fetch(`${res.locals.base_url}/api/articles/${req.params.id}`);
+
+    if (!response.ok) {
+        return res.status(404).render("pages/404.njk");
+    }
+
+    const article = await response.json();
+
+    let comments = { list_comments: [] };
+    try {
+        const commentsResponse = await fetch(`${res.locals.base_url}/api/articles/${req.params.id}/comments`);
+        comments = await commentsResponse.json();
+    } catch (_error) {}
+
+    res.render("pages/front-end/article.njk", {
+        article,
+        list_comments: comments.list_comments,
+    });
+});
+
 router.get("/sur-les-medias(.html)?", routeName("sur-les-medias"), async (_req, res) => {
     let result = {};
     try {
